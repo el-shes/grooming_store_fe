@@ -29,10 +29,13 @@ export default function ProcedureTable() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedProcedure, setSelectedProcedure] = useState({});
   const [openEditModal, setOpenEditModal] = React.useState(false);
+  const [error, setError] = useState({});
+
 
   const handleAddOpen = () => {
     setOpenAddModal(true);
     setLoading(true);
+    setError({});
   }
   const handleAddClose = () => {
     setOpenAddModal(false);
@@ -54,6 +57,7 @@ export default function ProcedureTable() {
     setSelectedProcedure(procedure);
     setOpenEditModal(true);
     setLoading(true);
+    setError({});
   }
   const handleEditClose = () => {
     setOpenEditModal(false);
@@ -67,6 +71,9 @@ export default function ProcedureTable() {
         console.log(res);
         postAction();
         await getProcedures().then(res => setProcedures(res.data));
+      }).catch(error => {
+        console.log(error.response.data)
+        setError(error.response.data)
       })
   }
   const deleteProcedure = async (procedure_id,postAction) => {
@@ -83,6 +90,9 @@ export default function ProcedureTable() {
         console.log(res);
         postAction();
         await getProcedures().then(res => setProcedures(res.data));
+      }).catch(error => {
+        console.log(error.response.data)
+        setError(error.response.data)
       })
   }
 
@@ -125,11 +135,12 @@ export default function ProcedureTable() {
             </TableBody>
           </Table>
         </TableContainer>
-        <AddProcedureModal open={openAddModal} handleClose={handleAddClose} addProcedure={addProcedure}/>
+        <AddProcedureModal open={openAddModal} handleClose={handleAddClose} addProcedure={addProcedure}
+                           errors={error}/>
         <DeleteProcedureModal open={openDeleteModal} handleClose={handleDeleteClose} deleteProcedure={deleteProcedure}
                               procedure={selectedProcedure}/>
         <EditProcedureModal open={openEditModal} handleClose={handleEditClose} editProcedure={editProcedure}
-                            procedure={selectedProcedure}/>
+                            procedure={selectedProcedure} errors={error}/>
       </div>
       <MyBackdrop loading={loading} setLoading={setLoading}/>
     </>

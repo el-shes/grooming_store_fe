@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
+import {useEffect} from "react";
 
 export default function AddUserModal(props) {
   const [first_name, setFirstName] = React.useState("");
@@ -27,6 +28,23 @@ export default function AddUserModal(props) {
     const user = {first_name, last_name, role, phone}
     await props.addUser(user, props.handleClose);
   };
+
+
+  useEffect(() => {
+    const name_regex = /^[A-Za-z\s'-]+$/;
+    if (!first_name.match(name_regex)) {
+      props.errors["first_name"] = "Invalid input";
+    if(!last_name.match(name_regex)) {
+      props.errors["last_name"] = "Invalid input";
+    }
+    }
+    const  = () => {
+      
+    }
+  },[first_name, last_name];
+  )
+
+
 
   return (
     <Modal

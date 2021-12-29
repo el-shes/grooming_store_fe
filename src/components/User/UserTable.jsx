@@ -99,7 +99,6 @@ export default function UserTable() {
     getUsers().then(res => setUsers(res.data));
   }, []);
 
-
   return (
     <>
       <div align={"center"}>
