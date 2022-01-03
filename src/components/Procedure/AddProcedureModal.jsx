@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from "@mui/material/FormHelperText";
+import {useEffect} from "react";
 
 export default function AddProcedureModal(props) {
   const [name, setName] = React.useState("");
@@ -26,6 +27,23 @@ export default function AddProcedureModal(props) {
     const procedure = {name, duration:parseInt(duration), basic_price:parseInt(basic_price)}
     await props.addProcedure(procedure, props.handleClose);
   };
+
+  useEffect(() => {
+    const name_regex = /^[A-Za-z]+$/;
+    if(!name.match(name_regex)) {
+      props.errors["name"] = "Invalid input";
+    }
+  },[name])
+
+  useEffect( () => {
+    const price_regex = /^[0-9]+$/;
+    if(!String(basic_price).match(price_regex)) {
+      props.errors["basic_price"] = "Invalid input";
+    }
+    if (String(basic_price).length > 5) {
+      props.errors["basic_price"] = "Too long";
+    }
+  }, [basic_price])
 
   return (
     <Modal

@@ -29,21 +29,26 @@ export default function AddUserModal(props) {
     await props.addUser(user, props.handleClose);
   };
 
+  useEffect(() => {
+    const first_name_regex = /^[A-Za-z\s'-]+$/;
+    if(!first_name.match(first_name_regex)) {
+      props.errors["first_name"] = "Invalid input";
+    }
+  },[first_name])
 
   useEffect(() => {
-    const name_regex = /^[A-Za-z\s'-]+$/;
-    if (!first_name.match(name_regex)) {
-      props.errors["first_name"] = "Invalid input";
-    if(!last_name.match(name_regex)) {
+    const last_name_regex = /^[A-Za-z\s'-]+$/;
+    if(!last_name.match(last_name_regex)) {
       props.errors["last_name"] = "Invalid input";
     }
-    }
-    const  = () => {
-      
-    }
-  },[first_name, last_name];
-  )
+  },[last_name])
 
+  useEffect( () => {
+    const phone_regex = /^[a-z0-9]+$/;
+    if (phone.length !== 10 ||!phone.match(phone_regex)) {
+      props.errors["phone"] = "Must contain numeric symbols and be of length 10"
+    }
+  }, [phone])
 
 
   return (

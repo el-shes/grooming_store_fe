@@ -11,6 +11,7 @@ import MyBackdrop from "../Common/MyBackdrop";
 export default function BreedCard(props) {
   const [openEditModal, setOpenEditModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+
   const handleEditOpen = () => {
     setOpenEditModal(true);
     setLoading(true);
