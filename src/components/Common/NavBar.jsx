@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import {useNaveBarStyles} from "./styles";
-import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
 
 
