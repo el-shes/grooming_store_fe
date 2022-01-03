@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
+import {useEffect} from "react";
 
 export default function AddUserModal(props) {
   const [first_name, setFirstName] = React.useState("");
@@ -27,6 +28,28 @@ export default function AddUserModal(props) {
     const user = {first_name, last_name, role, phone}
     await props.addUser(user, props.handleClose);
   };
+
+  useEffect(() => {
+    const first_name_regex = /^[A-Za-z\s'-]+$/;
+    if(!first_name.match(first_name_regex)) {
+      props.errors["first_name"] = "Invalid input";
+    }
+  },[first_name])
+
+  useEffect(() => {
+    const last_name_regex = /^[A-Za-z\s'-]+$/;
+    if(!last_name.match(last_name_regex)) {
+      props.errors["last_name"] = "Invalid input";
+    }
+  },[last_name])
+
+  useEffect( () => {
+    const phone_regex = /^[a-z0-9]+$/;
+    if (phone.length !== 10 ||!phone.match(phone_regex)) {
+      props.errors["phone"] = "Must contain numeric symbols and be of length 10"
+    }
+  }, [phone])
+
 
   return (
     <Modal

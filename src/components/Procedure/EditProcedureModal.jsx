@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import FormHelperText from "@mui/material/FormHelperText";
 
 
 export default function EditProcedure(props) {
@@ -50,14 +51,16 @@ export default function EditProcedure(props) {
         <form onSubmit={handleSubmit} encType={"application/json"}>
           <Stack spacing={2}>
             <TextField
+              error={props.errors.hasOwnProperty("name")}
               id="outlined-multiline-flexible-procedure-name"
               label="Name"
               multiline
+              helperText={props.errors["name"]}
               maxRows={4}
               value={name}
               onChange={e => setName(e.target.value)}
             />
-            <FormControl fullWidth>
+            <FormControl fullWidth  error={props.errors.hasOwnProperty("duration")}>
               <InputLabel id="duration-select-label">Duration</InputLabel>
               <Select
                   labelId="duration-select-label"
@@ -72,11 +75,14 @@ export default function EditProcedure(props) {
                 <MenuItem value={90}>90-min</MenuItem>
                 <MenuItem value={120}>2 Hours</MenuItem>
               </Select>
+              <FormHelperText>{props.errors["duration"]}</FormHelperText>
             </FormControl>
             <TextField
+              error={props.errors.hasOwnProperty("basic_price")}
               id="outlined-multiline-flexible-procedure-price"
               label="Basic Price"
               multiline
+              helperText={props.errors["basic_price"]}
               maxRows={4}
               value={basic_price}
               onChange={e => setBasicPrice(e.target.value)}

@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {SERVER} from "../../App";
 import BreedCard from "./BreedCard";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import {blue} from '@mui/material/colors';
 import AddBreedModal from "./AddBreedModal";
 import MyBackdrop from "../Common/MyBackdrop";
 import {IconButton} from "@mui/material";
@@ -15,9 +14,12 @@ export default function BreedGrid() {
 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
+
   const handleAddOpen = () => {
     setOpenAddModal(true);
     setLoading(true);
+    setError({});
   }
   const handleAddClose = () => {
     setOpenAddModal(false);
@@ -31,6 +33,9 @@ export default function BreedGrid() {
         console.log(res);
         postAction();
         await getBreeds().then(res => setBreeds(res.data));
+      }).catch(error => {
+        console.log(error.response.data)
+        setError(error.response.data)
       })
   }
   const updateBreed = async (id, breed, postAction) => {
@@ -39,6 +44,9 @@ export default function BreedGrid() {
         console.log(res);
         postAction();
         await getBreeds().then(res => setBreeds(res.data));
+      }).catch(error => {
+        console.log(error.response.data)
+        setError(error.response.data)
       })
   }
 
@@ -67,7 +75,7 @@ export default function BreedGrid() {
             </Grid>
           </Grid>
         </Grid>
-        <AddBreedModal open={openAddModal} handleClose={handleAddClose} addBreed={addBreed}/>
+        <AddBreedModal open={openAddModal} handleClose={handleAddClose} addBreed={addBreed} errors={error}/>
       </Box>
       <MyBackdrop loading={loading} setLoading={setLoading}/>
     </>

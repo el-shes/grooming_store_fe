@@ -6,11 +6,13 @@ import BreedGrid from "./components/Breed/BreedGrid";
 import ProcedureTable from "./components/Procedure/ProcedureTable";
 import UserTable from "./components/User/UserTable";
 import Navbar from "./components/Common/NavBar";
+import SignIn from "./components/Login/SignIn";
+import HomePage from "./components/Common/HomePage";
 
 export const SERVER = axios.create({
     baseURL: "http://127.0.0.1:5000",
-    headers: {'Content-Type': 'application/json'}
-    // withCredentials: true
+    headers: {'Content-Type': 'application/json'},
+    withCredentials: true
 });
 
 const Root = styled(Container)(({theme}) => ({
@@ -47,6 +49,8 @@ const App = () => {
             // <UserRoleContext.Provider value={{roles, setRoles}}>
             //     <Root sx={{mt: "1rem"}}>
             <Routes>
+              <Route path="/login" element={<SignIn/>}/>
+              <Route path="/home" element={<HomePage/>}/>
               <Route path="/breed" element={<BreedGrid/>}/>
               <Route path="/procedure" element={<ProcedureTable/>}/>
               <Route path="/user" element={<UserTable/>}/>
