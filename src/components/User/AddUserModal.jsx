@@ -34,6 +34,9 @@ export default function AddUserModal(props) {
     if(!first_name.match(first_name_regex)) {
       props.errors["first_name"] = "Invalid input";
     }
+    else {
+      delete props.errors["first_name"];
+    }
   },[first_name])
 
   useEffect(() => {
@@ -41,12 +44,18 @@ export default function AddUserModal(props) {
     if(!last_name.match(last_name_regex)) {
       props.errors["last_name"] = "Invalid input";
     }
+    else {
+      delete props.errors["last_name"];
+    }
   },[last_name])
 
   useEffect( () => {
     const phone_regex = /^[a-z0-9]+$/;
     if (phone.length !== 10 ||!phone.match(phone_regex)) {
       props.errors["phone"] = "Must contain numeric symbols and be of length 10"
+    }
+    else {
+      delete props.errors["phone"];
     }
   }, [phone])
 

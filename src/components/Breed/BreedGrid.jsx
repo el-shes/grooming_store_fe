@@ -60,7 +60,7 @@ export default function BreedGrid() {
         <Grid container spacing={2}>
           {breeds.map(breed => (
             <Grid item xs={4} key={breed.id}>
-              <BreedCard breed={breed} updateBreed={updateBreed}/>
+              <BreedCard breed={breed} updateBreed={updateBreed} errors={error}/>
             </Grid>
           ))}
           <Grid container

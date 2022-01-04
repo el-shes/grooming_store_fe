@@ -33,6 +33,9 @@ export default function AddProcedureModal(props) {
     if(!name.match(name_regex)) {
       props.errors["name"] = "Invalid input";
     }
+    else {
+      delete props.errors["name"];
+    }
   },[name])
 
   useEffect( () => {
@@ -42,6 +45,9 @@ export default function AddProcedureModal(props) {
     }
     if (String(basic_price).length > 5) {
       props.errors["basic_price"] = "Too long";
+    }
+    else {
+      delete props.errors["basic_price"];
     }
   }, [basic_price])
 

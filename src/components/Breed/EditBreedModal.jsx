@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import {SERVER} from "../../App";
 import {Stack} from "@mui/material";
 import {modalStyle} from "../Common/styles";
+import {useEffect} from "react";
 
 const style = {
   position: 'absolute',
@@ -45,6 +46,16 @@ export default function EditBreedModal(props) {
     }
     await props.updateBreed(id, breed, props.handleClose);
   };
+
+  useEffect(() => {
+    const breed_regex = /^[A-Za-z ]+$/;
+    if(!name.match(breed_regex)) {
+      props.errors["name"] = "Invalid input";
+    }
+    else {
+      delete props.errors["name"];
+    }
+  },[name])
 
   return (
     <Modal
