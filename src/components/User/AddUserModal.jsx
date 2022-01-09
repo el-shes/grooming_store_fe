@@ -123,7 +123,6 @@ export default function AddUserModal(props) {
             <Button type={"submit"} size="medium" variant={"contained"}>Save</Button>
           </div>
         </form>
-
       </Box>
     </Modal>
   );

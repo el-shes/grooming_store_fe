@@ -9,6 +9,7 @@ import AdminNavBar from "./components/Common/AdminNavBar";
 import SignIn from "./components/Login/SignIn";
 import HomePage from "./components/Common/HomePage";
 import Cookies from 'js-cookie';
+import SignUp from "./components/Login/SignUp";
 
 export const SERVER = axios.create({
   baseURL: "http://127.0.0.1:5000",
@@ -47,6 +48,7 @@ const App = () => {
     <BrowserRouter>
       <UserRoleContext.Provider value={{role, setRole}}>
         <Routes>
+          <Route path='/sign-up' element={<SignUp/>}/>
           <Route path="/login" element={<SignIn/>}/>
         </Routes>
         {role === "ADMIN" && (
