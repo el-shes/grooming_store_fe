@@ -30,9 +30,9 @@ export default function SignIn() {
     await logIn(phone, password)
   };
 
-  useEffect( () => {
-    Cookies.remove("user");
-  })
+  // useEffect( () => {
+  //   Cookies.remove("user");
+  // })
 
   useEffect( () => {
     const phone_regex = /^[0-9]+$/;

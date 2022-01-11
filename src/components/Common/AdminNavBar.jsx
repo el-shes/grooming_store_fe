@@ -33,6 +33,9 @@ export default function AdminNavBar() {
           Grooming Store
         </Typography>
         <div className={classes.navlinks}>
+          <Link to="/home" className={classes.link}>
+            Home
+          </Link>
           <Link to="/user" className={classes.link}>
             Users
           </Link>

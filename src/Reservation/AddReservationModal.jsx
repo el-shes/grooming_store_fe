@@ -1,55 +1,26 @@
 import * as React from "react";
+import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import {headerStyle, modalStyle, submitButtonStyle} from "../components/Common/styles";
 import Typography from "@mui/material/Typography";
 import {Stack} from "@mui/material";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import {headerStyle, modalStyle, submitButtonStyle} from "../Common/styles";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
-import {useEffect} from "react";
+import Button from "@mui/material/Button";
 
-export default function AddProcedureModal(props) {
-  const [name, setName] = React.useState("");
-  const [duration, setDuration] = React.useState(0);
-  const [basic_price, setBasicPrice] = React.useState(0);
-
-  const handleDurationChange = (event) => {
-    setDuration(event.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const procedure = {name, duration:parseInt(duration), basic_price:parseInt(basic_price)}
-    await props.addProcedure(procedure, props.handleClose);
-  };
-
-  useEffect(() => {
-    const name_regex = /^[A-Za-z]+$/;
-    if(!name.match(name_regex)) {
-      props.errors["name"] = "Invalid input";
-    }
-    else {
-      delete props.errors["name"];
-    }
-  },[name])
-
-  useEffect( () => {
-    const price_regex = /^[0-9]+$/;
-    if(!String(basic_price).match(price_regex)) {
-      props.errors["basic_price"] = "Invalid input";
-    }
-    if (String(basic_price).length > 5) {
-      props.errors["basic_price"] = "Too long";
-    }
-    else {
-      delete props.errors["basic_price"];
-    }
-  }, [basic_price])
+export default function AddReservationModal(props) {
+  const [master, setMaster] = React.useState("");
+  const [client, setClient] = React.useState("");
+  const [breed, setBreed] = React.useState("");
+  const [procedure, setProcedure] = React.useState("");
+  const [date, setDate] = React.useState(new Date());
+  const [startingHour, setStartingHour] = React.useState(new Date());
+  const [endingHour, setEndingHour] = React.useState(new Date());
+  const [finalPrice, setFinalPrice] = React.useState(0);
 
   return (
     <Modal
@@ -64,16 +35,17 @@ export default function AddProcedureModal(props) {
         </Typography>
         <form onSubmit={handleSubmit} encType={"application/json"}>
           <Stack spacing={2}>
-            <TextField
-              error={props.errors.hasOwnProperty("name")}
-              id="outlined-multiline-flexible-name"
-              label="Name"
-              multiline
-              helperText={props.errors["name"]}
-              maxRows={4}
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
+            <Select
+              labelId="master-select-label"
+              id="master-select"
+              value={master}
+              label="Master"
+              onChange={handleMasterChange}
+            >
+              {props.masters.map((master) => {
+                return <MenuItem value={master.id}>{master.name}</MenuItem>
+              })}
+            </Select>
             <FormControl fullWidth error={props.errors.hasOwnProperty("duration")}>
               <InputLabel id="duration-select-label">Duration</InputLabel>
               <Select

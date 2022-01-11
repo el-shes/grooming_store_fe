@@ -7,9 +7,10 @@ import ProcedureTable from "./components/Procedure/ProcedureTable";
 import UserTable from "./components/User/UserTable";
 import AdminNavBar from "./components/Common/AdminNavBar";
 import SignIn from "./components/Login/SignIn";
-import HomePage from "./components/Common/HomePage";
+import AdminHomePage from "./components/Common/AdminHomePage";
 import Cookies from 'js-cookie';
 import SignUp from "./components/Login/SignUp";
+import ClientHomePage from "./components/Common/ClientHomePage";
 
 export const SERVER = axios.create({
   baseURL: "http://127.0.0.1:5000",
@@ -51,20 +52,32 @@ const App = () => {
           <Route path='/sign-up' element={<SignUp/>}/>
           <Route path="/login" element={<SignIn/>}/>
         </Routes>
-        {role === "ADMIN" && (
+        {role === "ADMIN" ? (
           <>
             <AdminNavBar/>
             <Root sx={{mt: "1rem"}}>
               <Routes>
-                <Route path="/home" element={<HomePage/>}/>
+                <Route path="/home" element={<AdminHomePage/>}/>
                 <Route path="/breed" element={<BreedGrid/>}/>
                 <Route path="/procedure" element={<ProcedureTable/>}/>
                 <Route path="/user" element={<UserTable/>}/>
               </Routes>
             </Root>
           </>
+        ) : (
+          <></>
+          // <>
+          //   {/*<AdminNavBar/>*/}
+          //   <Root sx={{mt: "1rem"}}>
+          //     <Routes>
+          //       <Route path="/home" element={<ClientHomePage/>}/>
+          //
+          //     </Routes>
+          //   </Root>
+          // </>
         )}
       </UserRoleContext.Provider>
+
     </BrowserRouter>
   );
 };
