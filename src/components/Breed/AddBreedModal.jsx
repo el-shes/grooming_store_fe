@@ -32,8 +32,6 @@ export default function AddBreedModal(props) {
     }
   },[name])
 
-
-
   return (
     <Modal
       open={props.open}

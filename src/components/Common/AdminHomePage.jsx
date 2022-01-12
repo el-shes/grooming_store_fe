@@ -15,11 +15,13 @@ import {SERVER} from "../../App";
 import AddTimeSlotModal from "../TimeSlot/AddTimeSlotModal";
 import {useEffect, useState} from "react";
 import MyBackdrop from "./MyBackdrop";
+import AdminAddReservationModal from "../../Reservation/AddReservationModal";
 
 export default function AdminHomePage() {
   const [masters, setMasters] = useState([]);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
 
   const navBoxes = [
     {
@@ -56,9 +58,18 @@ export default function AdminHomePage() {
       .then(async res => {
         console.log(res);
         postAction();
+      }).catch(error => {
+        console.log(error.response.data)
+        setError(error.response.data)
+      })
+  };
+  const addReservation = async (reservation, postAction) => {
+    await SERVER.post("reservation", JSON.stringify(reservation))
+      .then(async res => {
+        console.log(res);
+        postAction();
       })
   }
-
 
   return (
     <React.Fragment>
@@ -127,6 +138,8 @@ export default function AdminHomePage() {
       >
       </Container>
       <AddTimeSlotModal open={openAddModal} handleClose={handleAddClose} masters={masters} addSlot={addTimeSlot}/>
+      <AdminAddReservationModal open={openAddModal} handleClose={handleAddClose} addReservation={addReservation}
+                                errors={error}/>
       <MyBackdrop loading={loading} setLoading={setLoading}/>
     </React.Fragment>
   )

@@ -48,7 +48,11 @@ export default function SignIn() {
     await SERVER.post( '/login', JSON.stringify({phone : phone, password : password}))
       .then( res => {
         context.setRole(res.data.role);
-        navigate("../home", { replace: true })
+        if (res.data.role === "ADMIN") {
+          navigate("../home", { replace: true })
+        } else {
+          navigate("../client_home", { replace: true })
+        }
       }).catch(error_result => {
         console.log(error_result.response.data)
         setError(error_result.response.data)

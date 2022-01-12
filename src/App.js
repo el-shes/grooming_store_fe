@@ -65,19 +65,16 @@ const App = () => {
             </Root>
           </>
         ) : (
-          <></>
-          // <>
-          //   {/*<AdminNavBar/>*/}
-          //   <Root sx={{mt: "1rem"}}>
-          //     <Routes>
-          //       <Route path="/home" element={<ClientHomePage/>}/>
-          //
-          //     </Routes>
-          //   </Root>
-          // </>
+          <>
+            {/*<AdminNavBar/>*/}
+            <Root sx={{mt: "1rem"}}>
+              <Routes>
+                <Route path="/client_home" element={<ClientHomePage/>}/>
+              </Routes>
+            </Root>
+          </>
         )}
       </UserRoleContext.Provider>
-
     </BrowserRouter>
   );
 };
