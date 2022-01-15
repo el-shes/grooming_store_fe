@@ -15,7 +15,7 @@ import {SERVER} from "../../App";
 import AddTimeSlotModal from "../TimeSlot/AddTimeSlotModal";
 import {useEffect, useState} from "react";
 import MyBackdrop from "./MyBackdrop";
-import AdminAddReservationModal from "../../Reservation/AddReservationModal";
+import AdminAddReservationModal from "../Reservation/AddReservationModal";
 
 export default function AdminHomePage() {
   const [masters, setMasters] = useState([]);
@@ -40,6 +40,7 @@ export default function AdminHomePage() {
   const handleAddOpen = () => {
     setOpenAddModal(true);
     setLoading(true);
+    setError({});
   };
 
   const handleAddClose = () => {
@@ -137,9 +138,9 @@ export default function AdminHomePage() {
         component="footer"
       >
       </Container>
-      <AddTimeSlotModal open={openAddModal} handleClose={handleAddClose} masters={masters} addSlot={addTimeSlot}/>
-      <AdminAddReservationModal open={openAddModal} handleClose={handleAddClose} addReservation={addReservation}
-                                errors={error}/>
+      <AddTimeSlotModal open={openAddModal} handleClose={handleAddClose} masters={masters} addSlot={addTimeSlot}
+                        errors={error}/>
+      {/*<AdminAddReservationModal open={openAddModal} handleClose={handleAddClose} addReservation={addReservation}/>*/}
       <MyBackdrop loading={loading} setLoading={setLoading}/>
     </React.Fragment>
   )

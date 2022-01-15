@@ -12,8 +12,8 @@ import TableBody from "@mui/material/TableBody";
 import {capitalize} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MyBackdrop from "./MyBackdrop";
-import AdminAddReservationModal from "../../Reservation/AddReservationModal";
-import DeleteReservationModal from "../../Reservation/DeleteReservationModal";
+import AdminAddReservationModal from "../Reservation/AddReservationModal";
+import DeleteReservationModal from "../Reservation/DeleteReservationModal";
 
 const tableStyle = {
   width: '80%'

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import {headerStyle, modalStyle, submitButtonStyle} from "../components/Common/styles";
+import {headerStyle, modalStyle, submitButtonStyle} from "../Common/styles";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 

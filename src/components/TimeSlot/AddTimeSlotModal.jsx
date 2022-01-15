@@ -12,7 +12,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import {LocalizationProvider} from "@mui/lab";
-import {useEffect} from "react";
 
 
 export default function AddTimeSlotModal(props) {
@@ -48,6 +47,10 @@ export default function AddTimeSlotModal(props) {
     setEndingHour(endingHour);
   };
 
+  const hasErrors = Object.keys(props.errors).length !== 0
+
+  const errorText = Object.keys(props.errors).map((error) => props.errors[error]).join('. ')
+
   return (
     <Modal
       open={props.open}
@@ -64,8 +67,10 @@ export default function AddTimeSlotModal(props) {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Select
+                  error={props.errors.hasOwnProperty("master_id")}
                   labelId="master-select-label"
                   id="master-select"
+                  helperText={props.errors["master_id"]}
                   value={masterId}
                   label="Master"
                   onChange={handleMasterChange}
@@ -106,6 +111,7 @@ export default function AddTimeSlotModal(props) {
                 />
               </Grid>
             </Grid>
+            {hasErrors && <label style={{color: "#c51244"}}>{errorText}</label>}
             <Button
               type="submit"
               fullWidth
