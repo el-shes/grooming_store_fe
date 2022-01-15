@@ -14,7 +14,7 @@ import Cookies from "js-cookie";
 import {UserRoleContext} from "../../App";
 
 
-export default function AdminNavBar() {
+export default function ClientNavBar() {
   const classes = useNaveBarStyles();
   let navigate = useNavigate();
   const context = useContext(UserRoleContext);
@@ -33,18 +33,6 @@ export default function AdminNavBar() {
           Grooming Store
         </Typography>
         <div className={classes.navlinks}>
-          <Link to="/home" className={classes.link}>
-            Home
-          </Link>
-          <Link to="/user" className={classes.link}>
-            Users
-          </Link>
-          <Link to="/procedure" className={classes.link}>
-            Procedures
-          </Link>
-          <Link to="/breed" className={classes.link}>
-            Breeds
-          </Link>
           <Stack direction="row" spacing={2}>
             <Button variant="contained" onClick={handleLogOut} startIcon={<LogoutIcon/>}>
               Log out

@@ -11,6 +11,7 @@ import AdminHomePage from "./components/Common/AdminHomePage";
 import Cookies from 'js-cookie';
 import SignUp from "./components/Login/SignUp";
 import ClientHomePage from "./components/Common/ClientHomePage";
+import ClientNavBar from "./components/Common/ClientNavBar";
 
 export const SERVER = axios.create({
   baseURL: "http://127.0.0.1:5000",
@@ -66,7 +67,7 @@ const App = () => {
           </>
         ) : (
           <>
-            {/*<AdminNavBar/>*/}
+            <ClientNavBar/>
             <Root sx={{mt: "1rem"}}>
               <Routes>
                 <Route path="/client_home" element={<ClientHomePage/>}/>
