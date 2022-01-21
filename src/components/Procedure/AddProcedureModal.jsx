@@ -33,6 +33,9 @@ export default function AddProcedureModal(props) {
     if(!name.match(name_regex)) {
       props.errors["name"] = "Invalid input";
     }
+    else {
+      delete props.errors["name"];
+    }
   },[name])
 
   useEffect( () => {
@@ -42,6 +45,9 @@ export default function AddProcedureModal(props) {
     }
     if (String(basic_price).length > 5) {
       props.errors["basic_price"] = "Too long";
+    }
+    else {
+      delete props.errors["basic_price"];
     }
   }, [basic_price])
 
@@ -78,7 +84,6 @@ export default function AddProcedureModal(props) {
                 onChange={handleDurationChange}
               >
                 <MenuItem value={30}>30-min</MenuItem>
-                <MenuItem value={45}>45-min</MenuItem>
                 <MenuItem value={60}>Hour</MenuItem>
                 <MenuItem value={90}>90-min</MenuItem>
                 <MenuItem value={120}>2 Hours</MenuItem>

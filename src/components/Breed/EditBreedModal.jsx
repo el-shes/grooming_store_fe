@@ -5,9 +5,9 @@ import Modal from '@mui/material/Modal';
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
-import {SERVER} from "../../App";
 import {Stack} from "@mui/material";
 import {modalStyle} from "../Common/styles";
+import {useEffect} from "react";
 
 const style = {
   position: 'absolute',
@@ -37,6 +37,16 @@ export default function EditBreedModal(props) {
   const [fur_coefficient, setFurCoefficient] = React.useState(props.breed.fur_coefficient);
   const [size_coefficient, setSizeCoefficient] = React.useState(props.breed.size_coefficient);
 
+  useEffect(() => {
+    const breed_regex = /^[A-Za-z ]+$/;
+    if(!name.match(breed_regex)) {
+      props.errors["name"] = "Invalid input";
+    }
+    else {
+      delete props.errors["name"];
+    }
+  },[name])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const breed = {
@@ -45,6 +55,7 @@ export default function EditBreedModal(props) {
     }
     await props.updateBreed(id, breed, props.handleClose);
   };
+
 
   return (
     <Modal
@@ -67,9 +78,11 @@ export default function EditBreedModal(props) {
         <form onSubmit={handleSubmit} encType={"application/json"}>
           <Stack spacing={2}>
             <TextField
+              error={props.errors.hasOwnProperty("name")}
               id="outlined-multiline-flexible-name"
               label="Name"
               multiline
+              helperText={props.errors["name"]}
               maxRows={4}
               value={name}
               onChange={e => setName(e.target.value)}
@@ -95,7 +108,6 @@ export default function EditBreedModal(props) {
             <Button type={"submit"} size="medium" variant={"contained"}>Save</Button>
           </div>
         </form>
-
       </Box>
     </Modal>
   );

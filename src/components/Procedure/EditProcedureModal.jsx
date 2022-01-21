@@ -70,7 +70,6 @@ export default function EditProcedure(props) {
                   onChange={handleDurationChange}
               >
                 <MenuItem value={30}>30-min</MenuItem>
-                <MenuItem value={45}>45-min</MenuItem>
                 <MenuItem value={60}>Hour</MenuItem>
                 <MenuItem value={90}>90-min</MenuItem>
                 <MenuItem value={120}>2 Hours</MenuItem>

@@ -10,31 +10,53 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {SERVER} from "../../App";
+import {SERVER, UserRoleContext} from "../../App";
 import { useNavigate } from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import Cookies from "js-cookie";
 
 
 const theme = createTheme();
 
 export default function SignIn() {
   let navigate = useNavigate();
+  const context = useContext(UserRoleContext);
+  const [error, setError] = useState({});
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      phone: data.get('phone'),
-      password: data.get('password'),
-    });
-    await logIn(data.get('phone'), data.get('password'))
+    await logIn(phone, password)
   };
+
+  // useEffect( () => {
+  //   Cookies.remove("user");
+  // })
+
+  useEffect( () => {
+    const phone_regex = /^[0-9]+$/;
+    if (phone.length !== 10 ||!phone.match(phone_regex)) {
+      error["phone"] = "Must contain numeric symbols and be of length 10"
+    }
+    else {
+      delete error["phone"];
+    }
+  }, [phone])
 
   const logIn = async (phone, password) => {
     await SERVER.post( '/login', JSON.stringify({phone : phone, password : password}))
       .then( res => {
-        console.log(res);
-        navigate("../home", { replace: true })
-      } )
+        context.setRole(res.data.role);
+        if (res.data.role === "ADMIN") {
+          navigate("../home", { replace: true })
+        } else {
+          navigate("../client_home", { replace: true })
+        }
+      }).catch(error_result => {
+        console.log(error_result.response.data)
+        setError(error_result.response.data)
+      })
   }
 
   return (
@@ -57,20 +79,28 @@ export default function SignIn() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
+              error={error.hasOwnProperty("phone")}
               margin="normal"
               required
               fullWidth
               id="phone"
+              helperText={error["phone"]}
               label="Contact Phone"
               name="phone"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
               autoComplete="phone"
               autoFocus
             />
             <TextField
+              error={error.hasOwnProperty("password")}
               margin="normal"
               required
               fullWidth
               name="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              helperText={error["password"]}
               label="Password"
               type="password"
               id="password"
@@ -80,19 +110,15 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={Object.keys(error).length !== 0}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/sign-up" variant="body2">
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>

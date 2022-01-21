@@ -44,7 +44,7 @@ export default function BreedCard(props) {
         </CardActions>
       </Card>
       <EditBreedModal open={openEditModal} handleClose={handleEditClose} breed={props.breed}
-                      updateBreed={props.updateBreed}/>
+                      updateBreed={props.updateBreed} errors={props.errors}/>
       <MyBackdrop loading={loading} setLoading={setLoading}/>
     </>
   );
