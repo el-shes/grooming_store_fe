@@ -15,9 +15,10 @@ import {SERVER} from "../../App";
 import AddTimeSlotModal from "../TimeSlot/AddTimeSlotModal";
 import {useEffect, useState} from "react";
 import MyBackdrop from "./MyBackdrop";
-import AdminAddReservationModal from "../Reservation/AddReservationModal";
+import {useNavigate} from "react-router-dom";
 
 export default function AdminHomePage() {
+  const navigate = useNavigate();
   const [masters, setMasters] = useState([]);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,14 @@ export default function AdminHomePage() {
     {
       title: 'Reservations',
       buttonText: 'Create Reservation',
+      buttonVariant: 'contained',
+      onClick: () => {
+        navigate("../checkout", {replace: true});
+      }
+    },
+    {
+      title: 'Set Master Procedures',
+      buttonText: 'Set Procedures',
       buttonVariant: 'contained',
     },
   ];
@@ -64,13 +73,6 @@ export default function AdminHomePage() {
         setError(error.response.data)
       })
   };
-  const addReservation = async (reservation, postAction) => {
-    await SERVER.post("reservation", JSON.stringify(reservation))
-      .then(async res => {
-        console.log(res);
-        postAction();
-      })
-  }
 
   return (
     <React.Fragment>
@@ -140,7 +142,6 @@ export default function AdminHomePage() {
       </Container>
       <AddTimeSlotModal open={openAddModal} handleClose={handleAddClose} masters={masters} addSlot={addTimeSlot}
                         errors={error}/>
-      {/*<AdminAddReservationModal open={openAddModal} handleClose={handleAddClose} addReservation={addReservation}/>*/}
       <MyBackdrop loading={loading} setLoading={setLoading}/>
     </React.Fragment>
   )

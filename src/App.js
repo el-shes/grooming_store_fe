@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import SignUp from "./components/Login/SignUp";
 import ClientHomePage from "./components/Common/ClientHomePage";
 import ClientNavBar from "./components/Common/ClientNavBar";
+import Checkout from "./components/Reservation/Checkout";
 
 export const SERVER = axios.create({
   baseURL: "http://127.0.0.1:5000",
@@ -75,6 +76,9 @@ const App = () => {
             </Root>
           </>
         )}
+        <Routes>
+          <Route path='/checkout' element={<Checkout/>}/>
+        </Routes>
       </UserRoleContext.Provider>
     </BrowserRouter>
   );

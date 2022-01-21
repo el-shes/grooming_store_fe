@@ -12,27 +12,23 @@ import TableBody from "@mui/material/TableBody";
 import {capitalize} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MyBackdrop from "./MyBackdrop";
-import AdminAddReservationModal from "../Reservation/AddReservationModal";
 import DeleteReservationModal from "../Reservation/DeleteReservationModal";
+import {useNavigate} from "react-router-dom";
 
 const tableStyle = {
   width: '80%'
 };
 
 export default function ClientHomePage() {
+  const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedReservation, setSelectedReservation] = useState({});
 
   const handleAddOpen = () => {
-    setOpenAddModal(true);
     setLoading(true);
-  };
-  const handleAddClose = () => {
-    setOpenAddModal(false);
-    setLoading(false);
+    navigate("../checkout", {replace: true});
   };
   const handleDeleteOpen = (reservation) => {
     setSelectedReservation(reservation);
@@ -46,14 +42,6 @@ export default function ClientHomePage() {
 
   const getReservations = async () => await SERVER.get("reservation");
 
-  const addReservation = async (reservation, postAction) => {
-    await SERVER.post(`reservation`, JSON.stringify(reservation))
-      .then(async res => {
-        console.log(res);
-        postAction();
-        await getReservations().then(res => setReservations(res.data));
-      })
-  }
   const deleteReservation = async (reservation_id, postAction) => {
     await SERVER.delete(`/reservation/${reservation_id}`)
       .then(async res => {

@@ -33,6 +33,9 @@ export default function ClientNavBar() {
           Grooming Store
         </Typography>
         <div className={classes.navlinks}>
+          <Link to="/client_home" className={classes.link}>
+            Home
+          </Link>
           <Stack direction="row" spacing={2}>
             <Button variant="contained" onClick={handleLogOut} startIcon={<LogoutIcon/>}>
               Log out
